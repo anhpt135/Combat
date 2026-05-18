@@ -46,6 +46,18 @@ void ACombatCharacterBase::BeginPlay()
 	
 }
 
+void ACombatCharacterBase::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+}
+
+void ACombatCharacterBase::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+}
+
 // Called every frame
 void ACombatCharacterBase::Tick(float DeltaTime)
 {
