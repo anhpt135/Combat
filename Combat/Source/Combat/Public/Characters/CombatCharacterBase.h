@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "CombatCharacterBase.generated.h"
 
@@ -10,13 +11,16 @@ class UAbilitySystemComponent;
 class UBasicAttributeSet;
 
 UCLASS()
-class COMBAT_API ACombatCharacterBase : public ACharacter
+class COMBAT_API ACombatCharacterBase : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	ACombatCharacterBase();
+	
+	// IAbilitySystemInterface implementation
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
 	UAbilitySystemComponent* AbilitySystemComponent;
