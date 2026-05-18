@@ -2,12 +2,16 @@
 
 
 #include "Characters/CombatCharacterBase.h"
+#include "GameplayAbilitySystem/Attributes/BasicAttributeSet.h"
 
 // Sets default values
 ACombatCharacterBase::ACombatCharacterBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 
 }
 

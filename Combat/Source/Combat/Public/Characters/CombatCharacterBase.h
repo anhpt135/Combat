@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "CombatCharacterBase.generated.h"
 
+class UAbilitySystemComponent;
+class UBasicAttributeSet;
+
 UCLASS()
 class COMBAT_API ACombatCharacterBase : public ACharacter
 {
@@ -14,6 +17,12 @@ class COMBAT_API ACombatCharacterBase : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ACombatCharacterBase();
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
+	UAbilitySystemComponent* AbilitySystemComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attributes")
+	UBasicAttributeSet* BasicAttributeSet;
 
 protected:
 	// Called when the game starts or when spawned
