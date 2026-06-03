@@ -9,6 +9,7 @@
 
 class UAbilitySystemComponent;
 class UBasicAttributeSet;
+class UGameplayEffect;
 
 UCLASS()
 class COMBAT_API ACombatCharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -34,6 +35,9 @@ protected:
 	
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Abilities")
+	TSubclassOf<UGameplayEffect> ManaRegenEffect;
 
 public:	
 	// Called every frame
