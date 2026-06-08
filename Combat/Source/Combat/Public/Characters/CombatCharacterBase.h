@@ -39,10 +39,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attributes")
 	UBasicAttributeSet* BasicAttributeSet;
 	
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Attributes|Input")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Attributes|Input")
 	TObjectPtr<UInputAction> BiteAttackInput;
 	
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Attributes|Input")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Attributes|Input")
 	TObjectPtr<UInputAction> ClawAttackInput;
 
 protected:
@@ -54,11 +54,13 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Abilities")
 	TSubclassOf<UGameplayEffect> ManaRegenEffect;
+	
+	void HamCallback_Bite_Started();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

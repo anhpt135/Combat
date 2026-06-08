@@ -82,14 +82,21 @@ void ACombatCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-	EIC->BindAction(BiteAttackInput, ETriggerEvent::Started, this, &HamCallback_Bite_Started);
-	EIC->BindAction(BiteAttackInput, ETriggerEvent::Completed, this, &HamCallback_Bite_Completed);
 	
-	EIC->BindAction(ClawAttackInput, ETriggerEvent::Started, this, &HamCallback_Claw_Started);
-	EIC->BindAction(ClawAttackInput, ETriggerEvent::Completed, this, &HamCallback_Claw_Completed);
-
-	// ToDo: từ ASC mình sẽ bind:
-	//AbilitySystemComponent->AbilityLocalInputPressed(ECombatAbilityInputID::Jump);
-	//AbilitySystemComponent->AbilityLocalInputReleased(ECombatAbilityInputID::Jump);
+	if (BiteAttackInput)
+	{
+		EIC->BindAction(BiteAttackInput, ETriggerEvent::Started, this, &ACombatCharacterBase::HamCallback_Bite_Started);
+		//EIC->BindAction(BiteAttackInput, ETriggerEvent::Completed, this, &HamCallback_Bite_Completed);
+	}
 	
+	if (ClawAttackInput)
+	{
+		//EIC->BindAction(ClawAttackInput, ETriggerEvent::Started, this, &HamCallback_Claw_Started);
+		//EIC->BindAction(ClawAttackInput, ETriggerEvent::Completed, this, &HamCallback_Claw_Completed);
+	}
+	
+}
+void ACombatCharacterBase::HamCallback_Bite_Started()
+{
+	AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(EMyAbilityInputID::BiteAttack));
 }
