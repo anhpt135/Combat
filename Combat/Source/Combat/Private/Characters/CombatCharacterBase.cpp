@@ -3,6 +3,7 @@
 
 #include "Characters/CombatCharacterBase.h"
 #include "Components/CapsuleComponent.h"
+#include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameplayAbilitySystem/Attributes/BasicAttributeSet.h"
 #include "GameplayEffect.h"
@@ -80,5 +81,15 @@ void ACombatCharacterBase::Tick(float DeltaTime)
 void ACombatCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	EIC->BindAction(BiteAttackInput, ETriggerEvent::Started, this, &HamCallback_Bite_Started);
+	EIC->BindAction(BiteAttackInput, ETriggerEvent::Completed, this, &HamCallback_Bite_Completed);
+	
+	EIC->BindAction(ClawAttackInput, ETriggerEvent::Started, this, &HamCallback_Claw_Started);
+	EIC->BindAction(ClawAttackInput, ETriggerEvent::Completed, this, &HamCallback_Claw_Completed);
 
+	// ToDo: từ ASC mình sẽ bind:
+	//AbilitySystemComponent->AbilityLocalInputPressed(ECombatAbilityInputID::Jump);
+	//AbilitySystemComponent->AbilityLocalInputReleased(ECombatAbilityInputID::Jump);
+	
 }
