@@ -83,6 +83,12 @@ void ACombatCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	
+	if (DashInput)
+	{
+		EIC->BindAction(DashInput, ETriggerEvent::Started, this, &ACombatCharacterBase::HamCallback_Dash_Started);
+		//EIC->BindAction(BiteAttackInput, ETriggerEvent::Completed, this, &HamCallback_Bite_Completed);
+	}
+	
 	if (BiteAttackInput)
 	{
 		EIC->BindAction(BiteAttackInput, ETriggerEvent::Started, this, &ACombatCharacterBase::HamCallback_Bite_Started);
@@ -96,6 +102,12 @@ void ACombatCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	}
 	
 }
+
+void ACombatCharacterBase::HamCallback_Dash_Started()
+{	
+	AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(EMyAbilityInputID::Dash));
+}
+
 void ACombatCharacterBase::HamCallback_Bite_Started()
 {
 	AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(EMyAbilityInputID::BiteAttack));

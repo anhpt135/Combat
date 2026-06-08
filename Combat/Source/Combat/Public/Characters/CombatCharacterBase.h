@@ -17,6 +17,7 @@ enum class EMyAbilityInputID : uint8
 {	None,
 	Confirm,
 	Cancel,
+	Dash,
 	BiteAttack,
 	ClawAttack,
 };
@@ -40,6 +41,9 @@ public:
 	UBasicAttributeSet* BasicAttributeSet;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Attributes|Input")
+	TObjectPtr<UInputAction> DashInput;
+	
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Attributes|Input")
 	TObjectPtr<UInputAction> BiteAttackInput;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Attributes|Input")
@@ -48,13 +52,13 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Abilities")
 	TSubclassOf<UGameplayEffect> ManaRegenEffect;
 	
+	void HamCallback_Dash_Started();
 	void HamCallback_Bite_Started();
 
 public:	
