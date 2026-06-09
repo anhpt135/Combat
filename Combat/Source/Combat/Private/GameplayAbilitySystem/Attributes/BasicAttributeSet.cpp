@@ -46,7 +46,7 @@ void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 			if(UAbilitySystemComponent* ASC = GetOwningAbilitySystemComponent())
 			{
 				// Thêm Tag State.Dead để báo hiệu nhân vật đã chết
-				ASC->AddLooseGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Dead")));
+				ASC->AddLooseGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Death")));
 			}
 		}
 	}

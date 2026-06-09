@@ -18,6 +18,7 @@ enum class EMyAbilityInputID : uint8
 {	None,
 	Confirm,
 	Cancel,
+	Death,
 	Dash,
 	BiteAttack,
 	ClawAttack,
