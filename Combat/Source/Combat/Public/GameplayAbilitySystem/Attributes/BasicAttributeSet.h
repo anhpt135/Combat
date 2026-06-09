@@ -19,21 +19,28 @@ public:
 	
 	UBasicAttributeSet();
 
+	// Hàm được gọi trước khi giá trị thuộc tính thay đổi
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	
+	// Hàm được gọi sau khi một GameplayEffect được thực thi
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
 
+	// Thuộc tính Máu
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing=OnRep_Health)
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS_BASIC(UBasicAttributeSet, Health)
 	
+	// Thuộc tính Máu tối đa
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing=OnRep_MaxHealth)
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS_BASIC(UBasicAttributeSet, MaxHealth)
 	
+	// Thuộc tính Mana
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing=OnRep_Mana)
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS_BASIC(UBasicAttributeSet, Mana)
 	
+	// Thuộc tính Mana tối đa
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing=OnRep_MaxMana)
 	FGameplayAttributeData MaxMana;
 	ATTRIBUTE_ACCESSORS_BASIC(UBasicAttributeSet, MaxMana)

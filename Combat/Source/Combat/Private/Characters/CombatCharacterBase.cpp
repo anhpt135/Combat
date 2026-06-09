@@ -14,14 +14,17 @@ ACombatCharacterBase::ACombatCharacterBase()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	// Set size for collision capsule
+	// Set size for collision capsule (Kích thước Capsule va chạm)
 	GetCapsuleComponent()->InitCapsuleSize(35.f, 96.0f);
+	
 	// Don't rotate when the controller rotates. Let that just affect the camera.
+	// Không xoay nhân vật khi Controller xoay. Chỉ để ảnh hưởng đến Camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
-	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = true; 
+	
+	// Configure character movement (Cấu hình di chuyển cho nhân vật)
+	GetCharacterMovement()->bOrientRotationToMovement = true; // Xoay nhân vật theo hướng di chuyển
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 500.f, 0.f); 
 	
 	GetCharacterMovement()->JumpZVelocity = 500.f;
@@ -31,7 +34,7 @@ ACombatCharacterBase::ACombatCharacterBase()
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.f;
 	
-	
+	// Khởi tạo các Component cho Gameplay Ability System
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 
@@ -51,8 +54,11 @@ void ACombatCharacterBase::BeginPlay()
 void ACombatCharacterBase::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
+	
+	// Khởi tạo thông tin cho Ability System (Server)
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 
+	// Áp dụng hiệu ứng hồi Mana mặc định nếu có
 	if (ManaRegenEffect)
 	{
 		FGameplayEffectContextHandle Context = AbilitySystemComponent->MakeEffectContext();
@@ -67,6 +73,7 @@ void ACombatCharacterBase::PossessedBy(AController* NewController)
 void ACombatCharacterBase::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
+	// Khởi tạo thông tin cho Ability System (Client)
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
 
@@ -83,32 +90,32 @@ void ACombatCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	
+	// Ràng buộc các phím tắt Input với các hàm xử lý
 	if (DashInput)
 	{
 		EIC->BindAction(DashInput, ETriggerEvent::Started, this, &ACombatCharacterBase::HamCallback_Dash_Started);
-		//EIC->BindAction(BiteAttackInput, ETriggerEvent::Completed, this, &HamCallback_Bite_Completed);
 	}
 	
 	if (BiteAttackInput)
 	{
 		EIC->BindAction(BiteAttackInput, ETriggerEvent::Started, this, &ACombatCharacterBase::HamCallback_Bite_Started);
-		//EIC->BindAction(BiteAttackInput, ETriggerEvent::Completed, this, &HamCallback_Bite_Completed);
 	}
 	
 	if (ClawAttackInput)
 	{
-		//EIC->BindAction(ClawAttackInput, ETriggerEvent::Started, this, &HamCallback_Claw_Started);
-		//EIC->BindAction(ClawAttackInput, ETriggerEvent::Completed, this, &HamCallback_Claw_Completed);
+		// Có thể thêm binding cho ClawAttackInput ở đây sau
 	}
 	
 }
 
 void ACombatCharacterBase::HamCallback_Dash_Started()
 {	
+	// Kích hoạt Ability được gán với Input ID tương ứng
 	AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(EMyAbilityInputID::Dash));
 }
 
 void ACombatCharacterBase::HamCallback_Bite_Started()
 {
+	// Kích hoạt Ability được gán với Input ID tương ứng
 	AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(EMyAbilityInputID::BiteAttack));
 }
