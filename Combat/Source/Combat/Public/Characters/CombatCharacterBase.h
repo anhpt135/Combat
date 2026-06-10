@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
+#include "Interfaces/CleanupAfterDeathInterface.h"
 #include "GameFramework/Character.h"
 #include "CombatCharacterBase.generated.h"
 
@@ -25,7 +26,7 @@ enum class EMyAbilityInputID : uint8
 };
 
 UCLASS()
-class COMBAT_API ACombatCharacterBase : public ACharacter, public IAbilitySystemInterface
+class COMBAT_API ACombatCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICleanupAfterDeathInterface
 {
 	GENERATED_BODY()
 
@@ -35,6 +36,9 @@ public:
 	
 	// IAbilitySystemInterface implementation (Kế thừa để dùng Gameplay Ability System)
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	
+	// ICleanupAfterDeathInterface implementation
+	virtual void CleanupAfterDeath_Implementation() override;
 	
 	// Thành phần Ability System chính của nhân vật
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")

@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameplayAbilitySystem/Attributes/BasicAttributeSet.h"
 #include "GameplayEffect.h"
+#include "GameFramework/Controller.h"
 
 // Sets default values
 ACombatCharacterBase::ACombatCharacterBase()
@@ -42,6 +43,27 @@ ACombatCharacterBase::ACombatCharacterBase()
 
 UAbilitySystemComponent* ACombatCharacterBase::GetAbilitySystemComponent() const
 {	return AbilitySystemComponent;
+}
+
+// ICleanupAfterDeathInterface implementation
+void ACombatCharacterBase::CleanupAfterDeath_Implementation()
+{
+	// 1. Tách Controller (Người chơi hoặc AI) khỏi Character
+	if (AController* CharController = GetController())
+	{
+		CharController->UnPossess();
+	}
+
+	// 2. Tắt tất cả va chạm
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
+	// 3. Tắt khả năng hiển thị (Optional - Tùy thuộc vào việc bạn muốn ẩn mesh đi trước không)
+	// GetMesh()->SetVisibility(false);
+	
+	// 4. Có thể gọi hàm để báo cho GameMode/GameState về việc nhân vật đã chết tại đây
+	
+	// 5. Cuối cùng, thực hiện xóa Actor và dọn dẹp bộ nhớ
+	Destroy();
 }
 
 // Called when the game starts or when spawned
