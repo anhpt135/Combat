@@ -7,6 +7,7 @@
 #include "Components/Button.h"
 #include "CombatUserWidgetBase.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FLoaiEventNguoiChoiTatHuongDan);
 /**
  * 
  */
@@ -23,6 +24,9 @@ protected:
 	
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> NutBamDongUI;	
+	
+	UPROPERTY(BlueprintAssignable, Category = "UICuaem")
+	FLoaiEventNguoiChoiTatHuongDan OnTatHDDuocRoiDo;
 
 private:
 	UFUNCTION()
