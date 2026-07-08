@@ -26,7 +26,7 @@ protected:
 	TObjectPtr<UButton> NutBamDongUI;	
 	
 	UPROPERTY(BlueprintAssignable, Category = "UICuaem")
-	FLoaiEventNguoiChoiTatHuongDan OnTatHDDuocRoiDo;
+	FLoaiEventNguoiChoiTatHuongDan OnTatUIDismiss;
 
 private:
 	UFUNCTION()

@@ -36,5 +36,5 @@ void UCombatUserWidgetBase::DepTiemUIThoi()
 {
 	UE_LOG(LogTemp, Warning, TEXT("UI cua em da duoc dong"));
 	RemoveFromParent();
-	OnTatHDDuocRoiDo.Broadcast();
+	OnTatUIDismiss.Broadcast();
 }
